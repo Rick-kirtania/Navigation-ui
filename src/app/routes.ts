@@ -6,6 +6,8 @@ import { BuildingsPage } from "./pages/BuildingsPage";
 import { EventModePage } from "./pages/EventModePage";
 import { EmergencyPage } from "./pages/EmergencyPage";
 import { AboutPage } from "./pages/AboutPage";
+import { LoginPage } from "./pages/LoginPage";
+import { SignupPage } from "./pages/SignupPage";
 import { NotFound } from "./pages/NotFound";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import { AdminDashboard } from "./pages/admin/AdminDashboard";
@@ -28,6 +30,14 @@ export const router = createBrowserRouter([
       { path: "emergency", Component: EmergencyPage },
       { path: "about", Component: AboutPage },
     ],
+  },
+  {
+    path: "/login",
+    Component: LoginPage,
+  },
+  {
+    path: "/signup",
+    Component: SignupPage,
   },
   {
     path: "/admin",

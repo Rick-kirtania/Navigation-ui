@@ -1,4 +1,4 @@
-import { Search, Map, AlertCircle, Calendar, ShieldCheck, Menu } from 'lucide-react';
+import { Search, Map, AlertCircle, Calendar, ShieldCheck,LogIn, Menu } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { universityInfo } from '../data/campusData';
@@ -31,12 +31,12 @@ export function TopNav({ onSearch, isEventMode, onEventModeToggle, onMenuToggle 
           <div className="flex items-center gap-4">
             <div className="text-xs opacity-90 hidden md:block">{universityInfo.motto}</div>
             <button
-              onClick={() => navigate('/admin')}
+              onClick={() => navigate('/login')}
               className="flex items-center gap-1 px-3 py-1 bg-white/20 hover:bg-white/30 rounded-full transition-colors text-xs font-medium"
-              title="Admin Panel"
+              title="Login"
             >
-              <ShieldCheck className="w-3 h-3" />
-              <span className="hidden sm:inline">Admin</span>
+              <LogIn className="w-3 h-3" />
+              <span className="hidden sm:inline">Login</span>
             </button>
           </div>
         </div>
