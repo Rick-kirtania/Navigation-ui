@@ -23,8 +23,8 @@ export function TopNav({ onSearch, isEventMode, onEventModeToggle, onMenuToggle 
     <div className="bg-white shadow-sm">
       {/* Title Bar */}
       <div className="bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 md:px-6 py-2">
-        <div className="max-w-7xl mx-auto flex justify-between items-center text-xs md:text-sm">
-          <div className="flex items-center gap-3 md:gap-6">
+        <div className="w-full flex justify-between items-center text-xs md:text-sm">
+          <div className="flex items-center gap-3 md:gap-4">
             <span className="hidden sm:inline">📧 {universityInfo.email}</span>
             <span>📞 {universityInfo.phone}</span>
           </div>
@@ -36,7 +36,7 @@ export function TopNav({ onSearch, isEventMode, onEventModeToggle, onMenuToggle 
               title="Login"
             >
               <LogIn className="w-3 h-3" />
-              <span className="hidden sm:inline">Login</span>
+              <span className="hidden sm:inline">Logout</span>
             </button>
           </div>
         </div>
@@ -44,7 +44,7 @@ export function TopNav({ onSearch, isEventMode, onEventModeToggle, onMenuToggle 
 
       {/* Main Navigation */}
       <div className="px-4 md:px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-6">
+        <div className="w-full flex items-center justify-between gap-3 md:gap-6">
             {/* Hamburger Menu Button + Logo */}
           <div className="flex items-center gap-2 md:gap-4">
             {/* Hamburger Button */}

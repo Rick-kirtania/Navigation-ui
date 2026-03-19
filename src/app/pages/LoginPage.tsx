@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { Mail, Lock, UserCircle, ShieldCheck } from 'lucide-react';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase"; // adjust path if needed
+import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useAuth } from "../contexts/AuthContext";
 
 export function LoginPage() {
   const [email, setEmail] = useState('');
@@ -8,16 +13,45 @@ export function LoginPage() {
   const [loginRole, setLoginRole] = useState<'student' | 'admin'>('student');
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Mock authentication logic
-    if (loginRole === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/');
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const user = userCredential.user;
+
+    // 🔥 SAVE LAST LOGIN HERE
+    await updateDoc(doc(db, "users", user.uid), {
+      lastLogin: serverTimestamp()
+    });
+
+    // 🔥 GET USER ROLE
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      alert("User data not found!");
+      return;
     }
-  };
+
+    const userData = userSnap.data();
+
+    // 🔥 NAVIGATION
+    if (userData.role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/app");
+    }
+
+  } catch (error: any) {
+    alert(error.message);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 flex items-center justify-center p-4">
@@ -132,16 +166,6 @@ export function LoginPage() {
               </Link>
             </p>
           </div>
-        </div>
-
-        {/* Back to Home */}
-        <div className="text-center mt-4">
-          <Link
-            to="/"
-            className="text-sm text-gray-600 hover:text-gray-800 hover:underline"
-          >
-            ← Back to Home
-          </Link>
         </div>
       </div>
     </div>

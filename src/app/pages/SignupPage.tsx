@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { User, Hash, Phone, Mail, Lock, GraduationCap } from 'lucide-react';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
 
 export function SignupPage() {
   const [formData, setFormData] = useState({
@@ -29,15 +32,38 @@ export function SignupPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Mock signup logic - in real app, would save to database
-    console.log('Student signup data:', formData);
-    
-    // Redirect to login after successful signup
-    navigate('/login');
-  };
+  const handleSignup = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    // 🔥 1. Create user in Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      formData.email,
+      formData.password
+    );
+
+    const user = userCredential.user;
+
+    // 🔥 2. Save user data in Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      fullName: formData.fullName,
+      rollNumber: formData.rollNumber,
+      phoneNumber: formData.phoneNumber,
+      department: formData.department,
+      email: formData.email,
+      role: "student", // 🔥 IMPORTANT
+    });
+
+    alert("Account created successfully!");
+
+    // 🔥 Redirect to login
+    navigate("/login");
+
+  } catch (error: any) {
+    alert(error.message);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 flex items-center justify-center p-4 py-12">
@@ -211,16 +237,6 @@ export function SignupPage() {
               </Link>
             </p>
           </div>
-        </div>
-
-        {/* Back to Home */}
-        <div className="text-center mt-4">
-          <Link
-            to="/"
-            className="text-sm text-gray-600 hover:text-gray-800 hover:underline"
-          >
-            ← Back to Home
-          </Link>
         </div>
       </div>
     </div>
