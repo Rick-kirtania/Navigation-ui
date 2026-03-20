@@ -11,11 +11,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   const navItems = [
     { path: '/', icon: Home, label: 'Dashboard' },
-    { path: '/map', icon: Map, label: 'Campus Map' },
-    { path: '/buildings', icon: Building2, label: 'Buildings' },
-    { path: '/event-mode', icon: Calendar, label: 'Event Mode' },
-    { path: '/emergency', icon: AlertCircle, label: 'Emergency Help' },
-    { path: '/about', icon: Info, label: 'About SVU' },
+    { path: '/app/map', icon: Map, label: 'Campus Map' },
+    { path: '/app/buildings', icon: Building2, label: 'Buildings' },
+    { path: '/app/event-mode', icon: Calendar, label: 'Event Mode' },
+    { path: '/app/emergency', icon: AlertCircle, label: 'Emergency Help' },
+    { path: '/app/about', icon: Info, label: 'About SVU' },
   ];
 
   return (

@@ -18,7 +18,7 @@ export function ManageEvents() {
   });
 
   const eventTypes = ['hall', 'stall', 'food', 'washroom', 'outdoor'];
-  const statusOptions = ['Upcoming', 'Ongoing', 'Completed', 'Cancelled'];
+  const statusOptions = ['Upcoming', 'Active', 'Ongoing', 'Completed', 'Cancelled'];
 
   const handleOpenModal = (event?: any) => {
     if (event) {
